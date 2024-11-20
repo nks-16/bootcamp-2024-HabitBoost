@@ -5,7 +5,7 @@ import path from 'path';
 // Create a function to connect to the database
 export const connectDB = async (): Promise<Database> => {
   const db = await open({
-    filename: path.join(__dirname, '../..', 'database.sqlite'),
+    filename: path.join(__dirname, '../..', 'habitboost.sqlite'),
     driver: sqlite3.Database
   });
   return db;
