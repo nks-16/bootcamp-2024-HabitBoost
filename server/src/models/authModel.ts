@@ -12,10 +12,11 @@ export const createUsersTable = `
 
 // SQL query for inserting a user
 export const insertUser = `
-INSERT INTO users (username, email, password, dateofbirth)
+INSERT INTO users (username, email, dateofbirth ,password)
 VALUES (?, ?, ?, ?);
 `;
 
+// SQL query to get user by username and password
 // SQL query to get user by username and password
 export const getUserByUsernameAndPassword = `
 SELECT * FROM users WHERE username = ? AND password = ?;

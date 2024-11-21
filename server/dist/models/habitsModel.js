@@ -6,7 +6,7 @@ const db_1 = require("../config/db");
 const createHabitLog = (habitId, habitName) => {
     const query = `
     INSERT INTO HabitLog (HabitID, HabitName, Count) 
-    VALUES (?, ?, 1);
+    VALUES (?, ?, 0);
   `;
     return new Promise((resolve, reject) => {
         db_1.db.run(query, [habitId, habitName], function (err) {

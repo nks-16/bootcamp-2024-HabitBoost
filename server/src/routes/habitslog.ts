@@ -1,15 +1,17 @@
 import { Router } from 'express';
-import { createHabitLog, updateHabitLog, getHabitLog } from '../models/habitsModel';
+import { createHabitLog, updateHabitLog, getHabitLog } from '../controllers/habitLogController';
 
 const router = Router();
 
 // POST request to create a new habit log
 router.post('/log', async (req, res) => {
   const { habitId, habitName } = req.body;
+  console.log(habitName);
   try {
     const result = await createHabitLog(habitId, habitName);
     res.status(201).json(result);
   } catch (error) {
+    console.log(error);
     res.status(500).json({ error: error });
   }
 });
@@ -18,6 +20,7 @@ router.post('/log', async (req, res) => {
 router.put('/log/:habitId', async (req, res) => {
   const { count } = req.body;
   const { habitId } = req.params;
+
   try {
     const result = await updateHabitLog(Number(habitId), count);
     res.status(200).json(result);
@@ -30,6 +33,7 @@ router.put('/log/:habitId', async (req, res) => {
 router.get('/log/:userId/:habitId', async (req, res) => {
   const { userId, habitId } = req.params;
   const { startDate, endDate } = req.query;
+
   try {
     const logs = await getHabitLog(Number(userId), Number(habitId), startDate as string, endDate as string);
     res.status(200).json(logs);
