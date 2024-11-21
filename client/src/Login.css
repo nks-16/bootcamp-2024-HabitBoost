@@ -1,3 +1,9 @@
+@import url('https://fonts.googleapis.com/css2?family=Cardo:wght@400;700&display=swap');
+
+*{
+  font-family: 'Cardo';
+}
+
 .container {
     background: rgba(255, 255, 255, 0.8); /* White background with opacity */
     padding: 20px;
@@ -10,6 +16,7 @@
   h1{
     text-align: center;
     margin-top:150px;
+    
   }
   
   h2 {
