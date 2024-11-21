@@ -14,7 +14,8 @@ const habitLogController_1 = require("../controllers/habitLogController");
 const router = (0, express_1.Router)();
 // POST request to create a new habit log
 router.post('/log', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { habitId, habitName, userId } = req.body;
+    const { habitId, habitName } = req.body;
+    console.log(habitName);
     try {
         const result = yield (0, habitLogController_1.createHabitLog)(habitId, habitName, userId);
         res.status(201).json(result);
