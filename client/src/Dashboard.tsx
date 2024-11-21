@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Login from './login'; // The login form component
 //import Dashboard from './Dashboard'; // The dashboard component
 
-const App: React.FC = () => {
+const Dashboard: React.FC = () => {
   return (
     <Router>
       <Routes>
@@ -14,4 +14,4 @@ const App: React.FC = () => {
   );
 };
 
-export default App;
+export default Dashboard;
