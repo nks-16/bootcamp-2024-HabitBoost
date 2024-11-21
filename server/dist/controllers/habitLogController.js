@@ -1,15 +1,15 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getHabitLog = exports.updateHabitLog = exports.createHabitLog = void 0;
+exports.deleteHabitLog = exports.getHabitLog = exports.updateHabitLog = exports.createHabitLog = void 0;
 const db_1 = require("../config/db"); // Import the database instance
 // Controller to create a new habit log
-const createHabitLog = (habitId, habitName) => {
+const createHabitLog = (habitId, habitName, userId) => {
     const query = `
-    INSERT INTO HabitLogs ( habitId, HabitName,userId, Count, Date)
-    VALUES (?, ?,?, 0, CURRENT_DATE);
+    INSERT INTO HabitLogs (habitId, HabitName, userId, Count, Date)
+    VALUES (?, ?, ?, 0, CURRENT_DATE);
   `;
     return new Promise((resolve, reject) => {
-        db_1.db.run(query, [habitId, habitName], function (err) {
+        db_1.db.run(query, [habitId, habitName, userId], function (err) {
             if (err) {
                 return reject({ message: err.message });
             }
@@ -53,3 +53,24 @@ const getHabitLog = (userId, habitId, startDate, endDate) => {
     });
 };
 exports.getHabitLog = getHabitLog;
+// Controller to delete a habit log
+const deleteHabitLog = (userId, habitId) => {
+    const query = `
+    DELETE FROM HabitLogs
+    WHERE userId = ? AND habitId = ? AND Date = CURRENT_DATE;
+  `;
+    return new Promise((resolve, reject) => {
+        db_1.db.run(query, [userId, habitId], function (err) {
+            if (err) {
+                return reject({ message: err.message });
+            }
+            if (this.changes > 0) {
+                resolve({ message: 'Habit log deleted successfully' });
+            }
+            else {
+                resolve({ message: 'No habit log found to delete' });
+            }
+        });
+    });
+};
+exports.deleteHabitLog = deleteHabitLog;
