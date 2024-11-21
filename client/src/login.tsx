@@ -17,7 +17,13 @@ const Login: React.FC = () => {
   };
 
   return (
+    <>
+    <div>
+    <h1>HabitBoost</h1>
+    </div>
+   
     <div className="container">
+      
       <h2>Login</h2>
       <form id="loginForm" onSubmit={handleSubmit}>
         <div className="form-group">
@@ -49,6 +55,7 @@ const Login: React.FC = () => {
         <img src="path-to-your-image.jpg" alt="Profile Image" /> {/* Make sure the path is correct */}
       </div>
     </div>
+    </>
   );
 };
 
