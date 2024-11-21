@@ -1,4 +1,5 @@
 import "./Login.css";
+import { Link, useNavigate } from 'react-router-dom';
 function Signup(){
     return(
         <div className="container">
@@ -19,7 +20,7 @@ function Signup(){
     <button type="submit">Sign Up</button>
   </form>
   <p>
-    Already have an account? <a href="login.html">Login</a>
+  Already have an account? <Link to="/">Login</Link>
   </p>
 </div>
 
