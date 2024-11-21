@@ -1,89 +1,75 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import './Dashboard.css';
-
-interface HabitData {
-  day: string;
-  percentage: number;
-  target: number;
-}
-
-interface HabitResponse {
-  [key: string]: HabitData[];
-}
+import Calendar from './components/Calendar';
 
 const Dashboard: React.FC = () => {
-  const [data, setData] = useState<HabitResponse>({});
-  const [selectedHabit, setSelectedHabit] = useState<string>("Exercise");
-  const [loading, setLoading] = useState<boolean>(true);
+  const [habits, setHabits] = useState<any[]>([]);
+  const [progress, setProgress] = useState<any[]>([]);
 
-  // Fetch data from API
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch("https://api.example.com/habits"); // Replace with your API URL
-        const result: HabitResponse = await response.json();
-        setData(result);
-        setLoading(false);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-        setLoading(false);
-      }
-    };
-
-    fetchData();
+    fetchHabits();
+    fetchProgress();
   }, []);
 
-  const handleHabitChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    setSelectedHabit(event.target.value);
+  const fetchHabits = async () => {
+    try {
+      const response = await fetch('/api/habits'); // Replace with actual API endpoint
+      const data = await response.json();
+      setHabits(data);
+    } catch (error) {
+      console.error('Error fetching habits:', error);
+    }
   };
 
-  if (loading) {
-    return (
-      <div className="App">
-        <h1>Loading...</h1>
-      </div>
-    );
-  }
+  const fetchProgress = async () => {
+    try {
+      const response = await fetch('/api/progress'); // Replace with actual API endpoint
+      const data = await response.json();
+      setProgress(data);
+    } catch (error) {
+      console.error('Error fetching progress:', error);
+    }
+  };
 
-  if (!data[selectedHabit]) {
-    return (
-      <div className="App">
-        <h1>Habit Tracker</h1>
-        <p>No data available for the selected habit.</p>
-      </div>
-    );
-  }
-
-  const bars = data[selectedHabit];
+  const handleLogout = () => {
+    // Handle logout logic
+    console.log('Logged out');
+  };
 
   return (
-    <div className="App">
-      <h1>Habit Tracker</h1>
-      <div className="dropdown">
-        <label htmlFor="habit-select">Select a habit: </label>
-        <select id="habit-select" value={selectedHabit} onChange={handleHabitChange}>
-          {Object.keys(data).map((habit) => (
-            <option key={habit} value={habit}>{habit}</option>
-          ))}
-        </select>
-      </div>
-
-      <div className="chart-container">
-        <div className="chart">
-          {bars.map((bar, index) => (
-            <div
-              key={index}
-              className="bar"
-              style={{
-                height: `${bar.percentage * 3}px`,
-                backgroundColor: bar.percentage >= bar.target ? 'gray' : 'red'
-              }}
-            >
-              <span className="bar-label">{bar.day}</span>
-              <span className="bar-percentage">{bar.percentage}%</span>
-            </div>
-          ))}
-        </div>
+    <div className="dashboard">
+      <header className="dashboard-header">
+        <h1>HabitBoost</h1>
+        <button className="logout-button" onClick={handleLogout}>
+          Logout
+        </button>
+      </header>
+      <div className="dashboard-content">
+        <aside className="dashboard-sidebar">
+          {/* Calendar Component */}
+          <Calendar />
+        </aside>
+        <main className="dashboard-main">
+          <section className="daily-goals">
+            <h2>Daily Goals</h2>
+            <ul>
+              {progress.map((item, index) => (
+                <li key={index}>
+                  <span>{item.habit}</span>
+                  <div className="progress-bar">
+                    <div
+                      className="progress-bar-fill"
+                      style={{ width: `${(item.completed / item.target) * 100}%` }}
+                    ></div>
+                  </div>
+                  <span>
+                    {item.completed}/{item.target}
+                  </span>
+                </li>
+              ))}
+            </ul>
+          </section>
+        </main>
       </div>
     </div>
   );

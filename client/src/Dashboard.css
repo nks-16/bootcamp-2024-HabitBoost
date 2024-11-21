@@ -1,76 +1,78 @@
+.dashboard {
+  font-family: Arial, sans-serif;
+  background-color: #f5f5f5;
+  color: #333;
+  padding: 20px;
+}
 
-body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #f4f4f9;
-  }
-  
-  .BarGraph {
-    text-align: center;
-    padding: 20px;
-  }
-  
-  h1 {
-    color: #333;
-  }
-  
-  .dropdown {
-    margin: 20px 0;
-  }
-  
-  .dropdown label {
-    font-size: 16px;
-    margin-right: 10px;
-  }
-  
-  .dropdown select {
-    padding: 5px;
-    font-size: 14px;
-  }
-  
-  /* Chart container */
-  .chart-container {
-    width: 100%;
-    max-width: 600px;
-    margin: auto;
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    background: #fff;
-  }
-  
-  /* Chart styling */
-  .chart {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
-    height: 300px;
-    border-left: 2px solid #ccc;
-    border-bottom: 2px solid #ccc;
-    padding: 10px;
-  }
-  
-  .bar {
-    width: 50px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-end;
-    margin: 0 5px;
-    position: relative;
-  }
-  
-  .bar-label {
-    position: absolute;
-    bottom: -20px;
-    font-size: 12px;
-    color: #666;
-  }
-  
-  .bar-percentage {
-    margin-top: 5px;
-    font-size: 12px;
-    color: #333;
-  }
-  
+.dashboard-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.dashboard-header h1 {
+  font-size: 24px;
+  color: #444;
+}
+
+.logout-button {
+  padding: 10px 15px;
+  background-color: #d9534f;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.logout-button:hover {
+  background-color: #c9302c;
+}
+
+.dashboard-content {
+  display: flex;
+}
+
+.dashboard-sidebar {
+  flex: 0 0 30%;
+  padding-right: 20px;
+}
+
+.dashboard-main {
+  flex: 1;
+}
+
+.daily-goals {
+  margin-top: 20px;
+}
+
+.daily-goals h2 {
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+.daily-goals ul {
+  list-style: none;
+  padding: 0;
+}
+
+.daily-goals li {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.progress-bar {
+  flex: 1;
+  height: 10px;
+  background-color: #ddd;
+  margin: 0 10px;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.progress-bar-fill {
+  height: 100%;
+  background-color: #5cb85c;
+}

@@ -1,73 +1,120 @@
 @import url('https://fonts.googleapis.com/css2?family=Cardo:wght@400;700&display=swap');
 
-*{
-  font-family: 'Cardo';
+* {
+  font-family: 'Cardo', serif; /* Applying Cardo font globally */
 }
 
 .container {
-    background: rgba(255, 255, 255, 0.8); /* White background with opacity */
+  background: rgba(255, 255, 255, 0.9); /* White background with less opacity for clarity */
+  padding: 30px;
+  border-radius: 12px; /* Rounded corners */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Enhanced shadow for depth */
+  max-width: 400px;
+  margin: 120px auto; /* Center vertically and horizontally */
+  background: linear-gradient(to bottom, #f9f9f9, #ffffff); /* Gradient background for depth */
+}
+
+h1 {
+  text-align: center;
+  margin-top: 40px; /* Reduced margin from top for better alignment */
+  font-weight: 900;
+  font-size: 48px; /* Adjusted size */
+  color: #5d3a2b; /* Dark brown color to match the natural theme */
+}
+
+h2 {
+  margin-bottom: 30px;
+  text-align: center;
+  color: #555; /* Softer color for subheading */
+}
+
+.form-group {
+  margin-bottom: 20px;
+  text-align: left;
+}
+
+label {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 14px;
+  color: #333; /* Dark gray for better contrast */
+}
+
+input {
+  width: 100%;
+  padding: 12px;
+  margin-top: 5px;
+  margin-bottom: 15px;
+  box-sizing: border-box;
+  border: 2px solid #ddd; /* Soft border */
+  border-radius: 10px; /* Rounded corners for input fields */
+  background-color: #f8f8f8;
+  font-size: 16px;
+  transition: border 0.3s ease, box-shadow 0.3s ease;
+  
+}
+
+input:focus {
+  border-color: #007bff; /* Blue border on focus */
+  outline: none;
+  box-shadow: 0 0 8px rgba(0, 123, 255, 0.4); /* Subtle shadow on focus */
+}
+
+button {
+  width: 100%;
+  padding: 12px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 10px; /* Rounded corners for the button */
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+button:hover {
+  background-color: #0056b3;
+  transform: scale(1.05); /* Slight hover animation */
+}
+
+p {
+  margin-top: 20px;
+  text-align: center;
+  color: #777; /* Light gray color for the paragraph */
+}
+
+.image-container {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  width: 60px; /* Increased size for the image */
+  height: 60px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 3px solid #007bff; /* Adding border to image */
+}
+
+.image-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 480px) {
+  .container {
     padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    max-width: 400px;
-    margin: 120px auto; /* Center vertically and horizontally */
   }
-  
-  h1{
-    text-align: center;
-    margin-top:150px;
-    
+
+  h1 {
+    font-size: 36px; /* Smaller font size for mobile */
   }
-  
-  h2 {
-    margin-bottom: 50px;
-  }
-  
-  .form-group {
-    margin-bottom: 15px;
-    text-align: left;
-  }
-  
-  label {
-    display: block;
-    margin-bottom: 5px;
-  }
-  
+
   input {
-    width: 100%;
-    padding: 8px;
-    box-sizing: border-box;
+    font-size: 14px;
   }
-  
+
   button {
-    width: 100%;
-    padding: 10px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
+    font-size: 14px;
   }
-  
-  button:hover {
-    background-color: #0056b3;
-  }
-  
-  p {
-    margin-top: 20px;
-  }
-  
-  .image-container {
-    position: absolute;
-    top: 10px;
-    left: 10px;
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    overflow: hidden;
-  }
-  
-  .image-container img {
-    width: 100%;
-    height: auto;
-  }
+}

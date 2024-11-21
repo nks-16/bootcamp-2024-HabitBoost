@@ -7,6 +7,12 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-image: url('./Login.png');
+    background-size: cover; /* Ensures the image covers the entire screen */
+    background-repeat: no-repeat; /* Prevents image repetition */
+    background-position: center center; /* Centers the image */
+    height: 100vh; /* Full viewport height */
+  width: 100%; /* Full width of the page */
+
 }
 
 code {
