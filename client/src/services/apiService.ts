@@ -1,29 +1,14 @@
-const BASE_URL = 'http://localhost:5000'; // Replace with your backend URL
+import axios from 'axios';
 
-export interface SignupData {
-  username: string;
-  email: string;
-  dateofbirth: string;
-  password: string;
-}
+export const fetchSampleData = () => {
+  return axios.get<{ id: number; name: string }[]>('http://localhost:5000/api/sample');
+};
 
-export const signupUser = async (data: SignupData): Promise<any> => {
-  try {
-    const response = await fetch(`${BASE_URL}/signup`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(data),
-    });
-
-    if (!response.ok) {
-      const errorData = await response.json();
-      throw new Error(errorData.error || 'Signup failed');
-    }
-
-    return await response.json(); // Return the successful response data
-  } catch (error) {
-    throw error; // Throw the error to be handled in the component
-  }
+export const signupUser = (username: string, email: string, dateofbirth: string, password: string) => {
+  return axios.post('http://localhost:5000/api/signup', {
+    username,
+    email,
+    dateofbirth,
+    password,
+  });
 };

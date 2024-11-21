@@ -1,50 +1,58 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { signupUser, SignupData } from './services/apiService'; // Import the API service
-import './Login.css';
+import "./Login.css";
+import { Link, useNavigate } from 'react-router-dom';
+import { useState } from 'react';
+import { signupUser } from './services/apiService';  // Adjust import path if necessary
 
-const Signup: React.FC = () => {
-  const [formData, setFormData] = useState<SignupData>({
+function Signup() {
+  const navigate = useNavigate();  // To navigate after successful signup
+  const [formData, setFormData] = useState({
     username: '',
     email: '',
     dateofbirth: '',
-    password: '',
+    password: ''
   });
+  const [error, setError] = useState<string>('');  // For error messages
 
-  const [error, setError] = useState<string | null>(null);
-  const navigate = useNavigate();
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+  // Handle form input changes
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { id, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [id]: value
+    }));
   };
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  // Handle form submission
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setError(null); // Clear previous errors
+    
+    // Validate that all fields are filled
+    if (!formData.username || !formData.email || !formData.dateofbirth || !formData.password) {
+      setError('All fields are required');
+      return;
+    }
 
     try {
-      const data = await signupUser(formData); // Use the API service
-      alert(data.message); // Success message from the backend
-      navigate('/login'); // Redirect to login page after successful signup
-    } catch (err: any) {
-      setError(err.message || 'An error occurred during signup');
+      // Call the signup API function
+      await signupUser(formData.username, formData.email, formData.dateofbirth, formData.password);
+      // Navigate to the login page after successful signup
+      navigate('/');
+    } catch (error) {
+      setError('Failed to sign up. Please try again.');
     }
   };
 
   return (
     <div className="container">
       <h2>Sign Up</h2>
-      {error && <div className="error">{error}</div>} {/* Display errors */}
       <form id="signupForm" onSubmit={handleSubmit}>
         <div className="form-group">
           <label htmlFor="username">Username:</label>
           <input
             type="text"
             id="username"
-            name="username"
             value={formData.username}
-            onChange={handleChange}
+            onChange={handleInputChange}
             required
           />
         </div>
@@ -53,9 +61,8 @@ const Signup: React.FC = () => {
           <input
             type="email"
             id="email"
-            name="email"
             value={formData.email}
-            onChange={handleChange}
+            onChange={handleInputChange}
             required
           />
         </div>
@@ -64,9 +71,8 @@ const Signup: React.FC = () => {
           <input
             type="date"
             id="dateofbirth"
-            name="dateofbirth"
             value={formData.dateofbirth}
-            onChange={handleChange}
+            onChange={handleInputChange}
             required
           />
         </div>
@@ -75,19 +81,19 @@ const Signup: React.FC = () => {
           <input
             type="password"
             id="password"
-            name="password"
             value={formData.password}
-            onChange={handleChange}
+            onChange={handleInputChange}
             required
           />
         </div>
         <button type="submit">Sign Up</button>
+        {error && <p className="error">{error}</p>}  {/* Display error if any */}
       </form>
       <p>
-        Already have an account? <a href="/login">Login</a>
+        Already have an account? <Link to="/">Login</Link>
       </p>
     </div>
   );
-};
+}
 
 export default Signup;
