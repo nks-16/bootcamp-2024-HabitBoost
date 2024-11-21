@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './Calendar.css';
+import '../services/apiService'
 import axios from 'axios';
 
 type Habit = {
@@ -41,7 +42,7 @@ const Calendar: React.FC = () => {
     const endDate = new Date(now.getFullYear(), now.getMonth() + 1, 0).toISOString().split('T')[0];
 
     try {
-      const response = await axios.get('/api/habit-logs', {
+      const response = await axios.get('/api/habitlogs', {
         params: { startDate, endDate }, // Pass the date range as query parameters
       });
       setHabitLogs(response.data);

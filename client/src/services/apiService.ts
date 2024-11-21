@@ -27,7 +27,7 @@ export const loginUser = (username: string,  password: string) => {
  * @param userId - User ID
  * @param habitId - Habit ID
  */
-const fetchHabitLogs = async (userId: number, habitId: number) => {
+ export const fetchHabitLogs = async (userId: number, habitId: number) => {
   // Get the current date
   const now = new Date();
 
@@ -51,6 +51,10 @@ const fetchHabitLogs = async (userId: number, habitId: number) => {
   }
 };
 
-export default fetchHabitLogs;
+
+
+export const saveHabit = (habitData: { name: string, color: string, goal: string, reminder: boolean }) => {
+  return axios.post('http://localhost:5000/api/habits', habitData);
+};
 
 

@@ -1,26 +1,18 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import './Login.css';
-import { loginUser } from './services/apiService';
 
 const Login: React.FC = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [error, setError] = useState<string | null>(null); // State for error handling
   const navigate = useNavigate();
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
-    try {
-      // Call the login API function
-      await loginUser(username, password);
-      alert('Welcome Back!');
-      // Navigate to Dashboard
-      navigate('/dashboard');
-    } catch (error) {
-      setError('Failed to log in. Please check your credentials and try again.');
-    }
+    // Add login logic here (e.g., authentication)
+    alert('Welcome Back!');
+    // Navigate to Dashboard
+    navigate('/dashboard');
   };
 
   return (
@@ -31,7 +23,6 @@ const Login: React.FC = () => {
 
       <div className="container">
         <h2>Login</h2>
-        {error && <p className="error">{error}</p>} {/* Display error message */}
         <form id="loginForm" onSubmit={handleSubmit}>
           <div className="form-group">
             <label htmlFor="username">Username:</label>
@@ -56,10 +47,10 @@ const Login: React.FC = () => {
           <button type="submit">Login</button>
         </form>
         <p>
-          Don't have an account? <Link to="/signup">Sign Up</Link>
+          Don't have an account? <Link to="/Signup">Sign Up</Link>
         </p>
         <div className="image-container">
-        <img src={require('./logo-png.png')} alt="Profile" />{/* Update path as necessary */}
+          <img src="/login" alt="Profile Image" /> {/* Make sure the path is correct */}
         </div>
       </div>
     </>
