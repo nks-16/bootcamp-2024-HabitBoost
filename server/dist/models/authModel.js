@@ -13,9 +13,10 @@ exports.createUsersTable = `
 // authModel.ts
 // SQL query for inserting a user
 exports.insertUser = `
-INSERT INTO users (username, email, password, dateofbirth)
+INSERT INTO users (username, email, dateofbirth ,password)
 VALUES (?, ?, ?, ?);
 `;
+// SQL query to get user by username and password
 // SQL query to get user by username and password
 exports.getUserByUsernameAndPassword = `
 SELECT * FROM users WHERE username = ? AND password = ?;

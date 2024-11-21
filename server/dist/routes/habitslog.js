@@ -10,18 +10,13 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
-const habitsModel_1 = require("../models/habitsModel");
+const habitLogController_1 = require("../controllers/habitLogController");
 const router = (0, express_1.Router)();
 // POST request to create a new habit log
 router.post('/log', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-<<<<<<< HEAD
-    const { habitId, habitName } = req.body;
-    console.log(habitName);
-=======
-    const { habitId, habitName, } = req.body;
->>>>>>> ede81f7e9e08fceb75e620ad85213242d689aa58
+    const { habitId, habitName, userId } = req.body;
     try {
-        const result = yield (0, habitsModel_1.createHabitLog)(habitId, habitName);
+        const result = yield (0, habitLogController_1.createHabitLog)(habitId, habitName, userId);
         res.status(201).json(result);
     }
     catch (error) {
@@ -33,7 +28,7 @@ router.put('/log/:habitId', (req, res) => __awaiter(void 0, void 0, void 0, func
     const { count } = req.body;
     const { habitId } = req.params;
     try {
-        const result = yield (0, habitsModel_1.updateHabitLog)(Number(habitId), count);
+        const result = yield (0, habitLogController_1.updateHabitLog)(Number(habitId), count);
         res.status(200).json(result);
     }
     catch (error) {
@@ -45,8 +40,19 @@ router.get('/log/:userId/:habitId', (req, res) => __awaiter(void 0, void 0, void
     const { userId, habitId } = req.params;
     const { startDate, endDate } = req.query;
     try {
-        const logs = yield (0, habitsModel_1.getHabitLog)(Number(userId), Number(habitId), startDate, endDate);
+        const logs = yield (0, habitLogController_1.getHabitLog)(Number(userId), Number(habitId), startDate, endDate);
         res.status(200).json(logs);
+    }
+    catch (error) {
+        res.status(500).json({ error: error });
+    }
+}));
+// DELETE request to delete a habit log
+router.delete('/log/:userId/:habitId', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { userId, habitId } = req.params;
+    try {
+        const result = yield (0, habitLogController_1.deleteHabitLog)(Number(userId), Number(habitId));
+        res.status(200).json(result);
     }
     catch (error) {
         res.status(500).json({ error: error });

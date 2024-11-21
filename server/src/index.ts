@@ -5,10 +5,10 @@ import bodyParser from 'body-parser';
 import { db } from './config/db'; // Import the SQLite database instance
 import signupRoute from './routes/signupRouter';
 import loginRoute from './routes/loginRouter';
-import habitsRoutes from './routes/habits';
+import habitslogs from './routes/habitslog';
+import habitRouter from './routes/habitRouter';
 
 dotenv.config();
-
 const app = express();
 const PORT = process.env.PORT || 5000;
 
@@ -22,7 +22,8 @@ app.locals.db = db;
 // Routes
 app.use('/api/signup', signupRoute);
 app.use('/api/login', loginRoute);
-app.use('/api/habits', habitsRoutes);
+app.use('/api/habitslogs', habitslogs);
+app.use('/api/habits',habitRouter);
 
 // Start the server
 app.listen(PORT, () => {

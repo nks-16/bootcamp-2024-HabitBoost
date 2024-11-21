@@ -4,7 +4,7 @@ import { db } from '../config/db';
 export const createHabitLog = (habitId: number, habitName: string) => {
   const query = `
     INSERT INTO HabitLog (HabitID, HabitName, Count) 
-    VALUES (?, ?, 1);
+    VALUES (?, ?, 0);
   `;
   return new Promise((resolve, reject) => {
     db.run(query, [habitId, habitName], function (err) {
