@@ -1,24 +1,18 @@
-import React, { useEffect, useState } from 'react';
-import { fetchSampleData } from './services/apiService';
-import Login from './login'
-
-interface SampleData {
-  id: number;
-  name: string;
-}
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Login from './login'; // The login form component
+import Dashboard from './Dashboard'; // The dashboard component
+import Signup from './Signup';
 
 const App: React.FC = () => {
-  const [data, setData] = useState<SampleData[]>([]);
-
-  useEffect(() => {
-    fetchSampleData().then(response => setData(response.data));
-  }, []);
-
   return (
-    <div>
-      <Login/>
-    </div>
-    
+    <Router>
+      <Routes>` `
+        <Route path="/" element={<Login />} />
+        <Route path="/" element={<Signup/>}/>
+        <Route path="/dashboard" element={<Dashboard/>} />
+      </Routes>
+    </Router>
   );
 };
 
