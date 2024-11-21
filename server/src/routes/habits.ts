@@ -6,6 +6,7 @@ const router = Router();
 // POST request to create a new habit log
 router.post('/log', async (req, res) => {
   const { habitId, habitName } = req.body;
+  console.log(habitName);
   try {
     const result = await createHabitLog(habitId, habitName);
     res.status(201).json(result);
