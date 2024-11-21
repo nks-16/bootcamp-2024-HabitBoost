@@ -20,15 +20,37 @@ export const loginUser = (username: string,  password: string) => {
   });
 };
 
-export const fetchHabitsAPI = async () => {
-  const response = await fetch('/api/habits');
-  if (!response.ok) throw new Error('Failed to fetch habits');
-  return await response.json();
+
+
+/**
+ * Fetch habit logs for a given user and habit within a date range.
+ * @param userId - User ID
+ * @param habitId - Habit ID
+ */
+const fetchHabitLogs = async (userId: number, habitId: number) => {
+  // Get the current date
+  const now = new Date();
+
+  // Determine the start and end dates for the current month
+  const startDate = new Date(now.getFullYear(), now.getMonth(), 1).toISOString().split('T')[0];
+  const endDate = new Date(now.getFullYear(), now.getMonth() + 1, 0).toISOString().split('T')[0];
+
+  try {
+    // Replace the base URL with your actual backend API URL
+    const response = await axios.get(`/api/habitslogs/log/${userId}/${habitId}`, {
+      params: {
+        startDate,
+        endDate,
+      },
+    });
+
+    return response.data; // Logs fetched from the server
+  } catch (error) {
+    console.error('Error fetching habit logs:', error);
+    throw error;
+  }
 };
 
-export const fetchHabitLogsAPI = async () => {
-  const response = await fetch('/api/habit-logs');
-  if (!response.ok) throw new Error('Failed to fetch habit logs');
-  return await response.json();
-};
+export default fetchHabitLogs;
+
 

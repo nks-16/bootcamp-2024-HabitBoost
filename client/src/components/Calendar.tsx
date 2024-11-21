@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './Calendar.css';
+import axios from 'axios';
 
 type Habit = {
   id: number;
@@ -15,32 +16,42 @@ type HabitLog = {
 const Calendar: React.FC = () => {
   const [habits, setHabits] = useState<Habit[]>([]);
   const [habitLogs, setHabitLogs] = useState<HabitLog[]>([]);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     fetchHabits();
     fetchHabitLogs();
   }, []);
 
+  // Fetch habits
   const fetchHabits = async () => {
     try {
-      const response = await fetch('/api/habits'); // Replace with your API endpoint
-      const data = await response.json();
-      setHabits(data);
+      const response = await axios.get('/api/habits'); // Replace with your API endpoint
+      setHabits(response.data);
     } catch (error) {
+      setError('Error fetching habits');
       console.error('Error fetching habits:', error);
     }
   };
 
+  // Fetch habit logs for the current month
   const fetchHabitLogs = async () => {
+    const now = new Date();
+    const startDate = new Date(now.getFullYear(), now.getMonth(), 1).toISOString().split('T')[0];
+    const endDate = new Date(now.getFullYear(), now.getMonth() + 1, 0).toISOString().split('T')[0];
+
     try {
-      const response = await fetch('/api/habit-logs'); // Replace with your API endpoint
-      const data = await response.json();
-      setHabitLogs(data);
+      const response = await axios.get('/api/habit-logs', {
+        params: { startDate, endDate }, // Pass the date range as query parameters
+      });
+      setHabitLogs(response.data);
     } catch (error) {
+      setError('Error fetching habit logs');
       console.error('Error fetching habit logs:', error);
     }
   };
 
+  // Render dots for completed habits on a specific date
   const renderDots = (date: string) => {
     const logsForDate = habitLogs.find((log) => log.date === date);
     if (!logsForDate) return null;
@@ -61,12 +72,14 @@ const Calendar: React.FC = () => {
     );
   };
 
+  // Generate calendar days for the current month
   const renderCalendarDays = () => {
-    const daysInMonth = 28; // Example: Adjust for specific months if needed
+    const now = new Date();
+    const daysInMonth = new Date(now.getFullYear(), now.getMonth() + 1, 0).getDate();
     const days = Array.from({ length: daysInMonth }, (_, i) => i + 1);
 
     return days.map((day) => {
-      const date = `2024-11-${String(day).padStart(2, '0')}`; // Example date generation
+      const date = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
       return (
         <td key={day}>
           {day}
@@ -85,6 +98,7 @@ const Calendar: React.FC = () => {
           <span className="icon menu"></span>
         </div>
       </header>
+      {error && <p className="error-message">{error}</p>}
       <table className="calendar">
         <thead>
           <tr>
@@ -98,18 +112,11 @@ const Calendar: React.FC = () => {
           </tr>
         </thead>
         <tbody>
-          <tr>
-            {renderCalendarDays().slice(0, 7)}
-          </tr>
-          <tr>
-            {renderCalendarDays().slice(7, 14)}
-          </tr>
-          <tr>
-            {renderCalendarDays().slice(14, 21)}
-          </tr>
-          <tr>
-            {renderCalendarDays().slice(21, 28)}
-          </tr>
+          <tr>{renderCalendarDays().slice(0, 7)}</tr>
+          <tr>{renderCalendarDays().slice(7, 14)}</tr>
+          <tr>{renderCalendarDays().slice(14, 21)}</tr>
+          <tr>{renderCalendarDays().slice(21, 28)}</tr>
+          <tr>{renderCalendarDays().slice(28)}</tr>
         </tbody>
       </table>
     </div>
