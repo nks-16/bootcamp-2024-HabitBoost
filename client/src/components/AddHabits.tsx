@@ -3,8 +3,10 @@ import './AddHabits.css';
 import { saveHabit } from '../services/apiService'; // Adjust import based on file structure
 import { useAuth } from '../context/AuthContext'; // Import the useAuth hook
 
+const userId = localStorage.getItem('userId');
+console.log('Retrieved userId:', userId);
 const AddHabit: React.FC = () => {
-  const { currentUser } = useAuth(); // Get userId from AuthContext
+  //const { currentUser } = useAuth(); // Get userId from AuthContext
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [habitName, setHabitName] = useState('');
   const [reminder, setReminder] = useState(false); // Reminder state (checkbox)
@@ -19,7 +21,7 @@ const AddHabit: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!currentUser) {
+    if (!userId) {
       alert('User is not logged in.');
       return;
     }

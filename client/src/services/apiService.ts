@@ -13,12 +13,34 @@ export const signupUser = (username: string, email: string, dateofbirth: string,
   });
 };
 
-export const loginUser = (username: string,  password: string) => {
-  return axios.post('http://localhost:5000/api/login', {
-    username,
-    password,
-  });
+export const loginUser = async (username: string, password: string) => {
+  try {
+    const response = await axios.post('http://localhost:5000/api/login', {
+      username,
+      password,
+    });
+
+    // Assuming the `userId` is returned in the response data
+    const { userId } = response.data;
+
+    // Store the `userId` in local storage
+    if (userId) {
+      localStorage.setItem('userId', userId);
+      console.log('UserId stored in localStorage:', userId);
+    } else {
+      console.error('UserId not found in the response.');
+    }
+
+    return response.data;
+  } catch (error) {
+    console.error('Error logging in:', error);
+    throw error;
+  }
 };
+
+
+
+
 
 
 

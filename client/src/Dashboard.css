@@ -1,179 +1,525 @@
-.dashboard {
-  font-family: Arial, sans-serif;
-  background-color: #f5f5f5;
-  color: #333;
-  padding: 20px;
+body {
+  font-family: 'Arial', sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f9f9f9;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-image: url(Login.png);
 }
 
-.dashboard-header {
+/* Calendar Container */
+.calendar-container {
+  width: 400px;
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  overflow: hidden;
+  animation: fadeIn 1s ease-in-out;
+  /* Positioning for top-left corner */
+  position: absolute;
+  top: 65px;
+  left: 15px;
+  margin: 20px; /* Optional: Add space from edges */
+}
+
+/* Header */
+.calendar-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 20px;
 }
 
-.dashboard-header h1 {
-  font-size: 24px;
-  color: #444;
+.calendar-header h2 {
+  margin: 0;
+  font-size: 18px;
+  color: #333;
+  animation: slideIn 1s ease-in-out;
 }
 
-.logout-button {
-  padding: 10px 15px;
-  background-color: #d9534f;
-  color: #fff;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-.logout-button:hover {
-  background-color: #c9302c;
-}
-
-.dashboard-content {
+.icons {
   display: flex;
+  gap: 10px;
 }
 
-.dashboard-sidebar {
-  flex: 0 0 30%;
-  padding-right: 20px;
-}
-
-.dashboard-main {
-  flex: 1;
-}
-
-.daily-goals {
-  margin-top: 20px;
-}
-
-.daily-goals h2 {
-  font-size: 20px;
-  margin-bottom: 10px;
-}
-
-.daily-goals ul {
-  list-style: none;
-  padding: 0;
-}
-
-.daily-goals li {
-  display: flex;
-  align-items: center;
-  margin-bottom: 10px;
-}
-
-.progress-bar {
-  flex: 1;
+.icon {
+  width: 10px;
   height: 10px;
   background-color: #ddd;
-  margin: 0 10px;
-  border-radius: 5px;
-  overflow: hidden;
+  border-radius: 50%;
+  animation: pulse 2s infinite;
 }
 
-.progress-bar-fill {
-  height: 100%;
-  background-color: #5cb85c;
+.menu {
+  background-color: #ddd;
 }
 
-/* Add Habit Button */
-.add-habit-button {
-  position: fixed; /* Position it at a fixed place */
-  bottom: 20px; /* Distance from the bottom of the screen */
-  right: 20px; /* Distance from the right of the screen */
-  background-color: #4caf50; /* Green color */
-  color: white;
-  border: none;
-  border-radius: 50%; /* Makes it a circular button */
-  width: 50px; /* Width of the button */
-  height: 50px; /* Height of the button */
-  font-size: 24px; /* Font size for the "+" */
+/* Calendar Table */
+.calendar {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: center;
+  animation: popIn 1s ease-in-out;
+}
+
+.calendar th,
+.calendar td {
+  padding: 10px;
+  font-size: 14px;
+  color: #555;
+  vertical-align: top;
+  position: relative;
+}
+
+.calendar thead th {
+  font-weight: bold;
+  color: #888;
+}
+
+.calendar td.disabled {
+  color: #ddd;
+}
+
+.calendar td:not(.disabled):hover {
+  background-color: #f0f0f0;
   cursor: pointer;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+  animation: hoverEffect 0.5s ease-in-out;
 }
 
-.add-habit-button:hover {
-  background-color: #45a049; /* Slightly darker green on hover */
+.calendar td.highlight {
+  color: #fff;
+  font-weight: bold;
+  background-color: #007BFF;
+  border-radius: 50%;
+  display: inline-block;
+  width: 32px;
+  height: 32px;
+  line-height: 32px;
+  animation: bounce 1s infinite;
+}
+
+/* Styles for habit dots */
+.calendar td .habit-dots-container {
+  position: absolute;
+  bottom: 5px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 3px;
+  animation: popIn 1s ease-in-out;
+}
+
+.calendar td .habit-dots-container .habit-dot {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  display: inline-block;
+  background-color: #007BFF;
+  animation: scaleUp 1s ease-in-out;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+      opacity: 0;
+      transform: translateY(20px);
+  }
+  to {
+      opacity: 1;
+      transform: translateY(0);
+  }
+}
+
+@keyframes slideIn {
+  from {
+      transform: translateX(-100%);
+  }
+  to {
+      transform: translateX(0);
+  }
+}
+
+@keyframes popIn {
+  from {
+      transform: scale(0);
+  }
+  to {
+      transform: scale(1);
+  }
+}
+
+@keyframes hoverEffect {
+  from {
+      background-color: #f0f0f0;
+  }
+  to {
+      background-color: #d4d4d4;
+  }
+}
+
+@keyframes bounce {
+  0%, 20%, 50%, 80%, 100% {
+      transform: translateY(0);
+  }
+  40% {
+      transform: translateY(-10px);
+  }
+  60% {
+      transform: translateY(-5px);
+  }
+}
+
+@keyframes pulse {
+  0% {
+      transform: scale(1);
+  }
+  50% {
+      transform: scale(1.1);
+  }
+  100% {
+      transform: scale(1);
+  }
+}
+
+@keyframes scaleUp {
+  from {
+      transform: scale(0);
+  }
+  to {
+      transform: scale(1);
+  }
 }
 
 
-
-.add-habit-btn:focus {
-  outline: none;
-}
-
-
-.calendar-section {
+.right-section {
   background-color: #fff;
   padding: 20px;
   border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-/* Popup Styling */
-.popup-overlay {
+.right-section {
+  size: a5;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  position: absolute;
+  top: 80px;
+  right: 30px;
+  padding-bottom: 25px;
+  padding-right: 20px;
+  padding-top: 0px;
+  background-color: #3a3cb3;
+  width: 80px;
+  height: 20px;
+  color: white;
+  font-size: 8px;
+}
+
+.add-habits-container {
+  display: flex;
+  align-items: center; 
+  justify-content: space-between; 
+  gap: 10px; 
+  size: 30px;
+  font-size: 8px;
+  font-family:Verdana, Geneva, Tahoma, sans-serif;
+}
+
+button.plus-button {
+  background-color: #000000; /* Blue color */
+  color: white;
+  border: none;
+  width: auto; /* Adjust width to fit content */
+  height: 30px;
+  border-radius: 5px; /* Slightly rounded corners */
+  cursor: pointer;
+  margin-top: 7px;
+  font-size: 16px;
+  padding: 0 15px; /* Add padding for spacing */
+  display: flex;
+  align-items: center;
+}
+
+button.plus-button:hover {
+  background-color: #4d4e50; /* Darker blue on hover */
+}
+
+button.plus-button::before {
+  font-size: 20px;
+  margin-right: 10px; /* Space between plus sign and text */
+}
+
+button.plus-button::after {  
+  font-size: 12px;
+  margin-left: 10px; /* Space between text and arrow */
+}
+
+.popup {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
   background-color: rgba(0, 0, 0, 0.5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
 
-.popup-card {
-  background-color: white;
+.popup-content {
+  background-color: #fff;
   padding: 20px;
-  border-radius: 10px;
-  width: 400px;
-  max-width: 80%;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  border-radius: 40px;
+  margin-top: 80px;
+  width: 600px;
+  height: 500px;
+  position: relative;
 }
+
+.hidden {
+  display: none;
+}
+
 
 .close-btn {
   position: absolute;
-  top: 10px;
-  right: 10px;
-  font-size: 30px;
+  top: 20px;
+  right: 20px;
   cursor: pointer;
+  font-size: 30px;
+  color: black;
 }
 
-h2 {
-  font-size: 24px;
-  margin-bottom: 20px;
-}
-
-input, select, button {
+.search-box {
   width: 100%;
   padding: 10px;
-  margin-bottom: 10px;
-  border: 1px solid #ddd;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
   border-radius: 5px;
 }
 
-button {
-  background-color: #007bff;
-  color: white;
+.hello{
+  color: black;
+  font-size:25px;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  margin: 15px;
+  margin-left: 0px;
+}
+
+
+.habit-list-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.habit-list {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.habit-item {
+  background-color: #f4f4f4;
+  border-radius: 5px;
+  padding: 10px 15px;
+  margin-bottom: 15px;
+  margin-right: 12px;
+  display: flex;
+  font-size: 12px;
+  color: #000000;
+  align-items: center;
+  border: 1px solid #ddd;
   cursor: pointer;
 }
 
-button:hover {
-  background-color: #0056b3;
+.habit-item:hover {
+  background-color: #e0e0e0;
 }
 
-button:disabled {
-  background-color: #b0b0b0;
+.goal-section, .reminder-section {
+  margin-top: 20px;
+  color: black;
+  font-size: 14px;
 }
 
-label {
+.goal-section label, .reminder-section label {
   display: block;
   margin-bottom: 5px;
 }
 
-/* Additional Styles for Form Elements */
-input[type="checkbox"] {
-  width: auto;
-  margin-left: 5px;
+.save-button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 10px;
+  cursor: pointer;
+  width: 100%;
+  margin-top: 20px;
+}
+
+.save-button:hover {
+  background-color: #0056b3;
+}
+
+
+.habit-progress-container {
+  position: absolute; /* Allows explicit positioning */
+  top: 300px; /* Adjust this value based on the calendar's position */
+  left: 50%; /* Center it horizontally */
+  transform: translateX(-50%); /* Centers the element properly */
+  width: 400px;
+  padding: 15px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  background-color: #f9f9f9;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  animation: fadeIn 0.5s ease-in-out;
+  text-align: center;
+}
+
+.progress-bar-container {
+  position: absolute; /* Allows explicit positioning */
+  top: 150px; /* Align it to the current position of the habit progress container */
+  left: 50%; /* Center it horizontally */
+  transform: translateX(-50%); /* Centers the element properly */
+  width: 400px;
+  padding: 15px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  background-color: #ffffff; /* Slightly different for visual contrast */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  animation: fadeIn 0.5s ease-in-out;
+  text-align: center;
+}
+
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.habit-progress,
+.progress-bar {
+  margin-top: 10px;
+}
+
+.habit-item-progress,
+.progress-bar-text {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+  padding: 10px;
+  border-radius: 5px;
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s;
+}
+
+.habit-item-progress:hover {
+  transform: translateY(-5px);
+}
+
+.habit-item-progress span,
+.progress-bar-text span {
+  margin-right: 10px;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.habit-item-progress .plus-button,
+.progress-bar .plus-button {
+  padding: 5px 10px;
+  font-size: 16px;
+  cursor: pointer;
+  border: none;
+  border-radius: 5px;
+  background-color: #007bff;
+  color: white;
+  margin-left: auto;
+  transition: background-color 0.3s;
+}
+
+.habit-item-progress .plus-button:hover,
+.progress-bar .plus-button:hover {
+  background-color: #0056b3;
+}
+
+.habit-item-progress .plus-button:active,
+.progress-bar .plus-button:active {
+  transform: scale(0.95);
+}
+
+.progress {
+  width: 100%;
+  height: 20px;
+  background-color: #e0e0e0;
+  border-radius: 10px;
+  overflow: hidden;
+  position: relative;
+}
+
+.progress-fill {
+  height: 100%;
+  background-color: #007bff;
+  border-radius: 10px;
+  transition: width 0.3s ease-in-out;
+}
+
+  /* navbar section */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #2b2d30;
+  padding: 10px 20px;
+  color: #fff;
+  position: fixed;
+  width: 100%;
+  top: 0;
+  z-index: 1000;
+}
+
+.logo-container { 
+  display: flex; 
+  align-items: center;
+  width: 50px;
+  height: 40px;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+
+.logo {
+   width: 100%;
+   height: auto;
+}
+
+.navbar .title {
+  font-size: 30px;
+  font-family: Arial, Helvetica, sans-serif;
+  font-style: italic;
+}
+
+.navbar .logout-button {
+  background-color: #ff4757;
+  color: white;
+  width: 60px;
+  margin-right: 100px;
+  border-radius: 5px;
+  padding-right: 20px;
+  cursor: pointer;
+}
+
+.navbar .logout-button:hover {
+  background-color: #e84142;
 }

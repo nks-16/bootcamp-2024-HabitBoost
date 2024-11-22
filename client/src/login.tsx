@@ -50,7 +50,7 @@ const Login: React.FC = () => {
           Don't have an account? <Link to="/Signup">Sign Up</Link>
         </p>
         <div className="image-container">
-          <img src="/login" alt="Profile Image" /> {/* Make sure the path is correct */}
+        {/*<img src="logo-png.png" alt="Profile Image" /> */}
         </div>
       </div>
     </>

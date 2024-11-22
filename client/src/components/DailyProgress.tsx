@@ -3,6 +3,10 @@ import { fetchHabits, incrementGoal } from '../services/apiService';
 import './DailyProgress.css';
 import { useAuth } from '../context/AuthContext'; // Import the useAuth hook
 
+const userId = localStorage.getItem('userId');
+console.log('Retrieved userId:', userId);
+
+
 interface Habit {
   id: string; // Habit ID should be a string
   name: string;
@@ -12,14 +16,14 @@ interface Habit {
 }
 
 const DailyProgress: React.FC = () => {
-  const { currentUser } = useAuth(); // Get currentUser from AuthContext
+  //const { userId } = useAuth(); // Get userId from AuthContext
   const [habits, setHabits] = useState<Habit[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
 
   // Fetch habits data from the backend, passing userId to the API
   const fetchHabitData = async () => {
-    if (!currentUser?.id) {
+    if (!userId) {
       setError('User is not logged in.');
       return;
     }
@@ -27,7 +31,7 @@ const DailyProgress: React.FC = () => {
     setLoading(true);
     setError(null);
     try {
-      const response = await fetchHabits(currentUser.id); // Pass userId from AuthContext
+      const response = await fetchHabits(userId); // Pass userId from AuthContext
       setHabits(response.data);
     } catch (err: any) {
       setError('Failed to fetch habits.');
@@ -39,13 +43,13 @@ const DailyProgress: React.FC = () => {
 
   // Increment goal for a habit, passing userId and habitId
   const handleIncrementGoal = async (habitId: string) => {
-    if (!currentUser?.id) {
+    if (!userId) {
       setError('User is not logged in.');
       return;
     }
 
     try {
-      await incrementGoal(currentUser.id, habitId); // Pass userId and habitId
+      await incrementGoal(userId, habitId); // Pass userId and habitId
       fetchHabitData(); // Refresh the habit data after goal increment
     } catch (err: any) {
       setError('Failed to increment goal.');
@@ -55,10 +59,10 @@ const DailyProgress: React.FC = () => {
 
   // Use useEffect to fetch data on initial load
   useEffect(() => {
-    if (currentUser?.id) {
+    if (userId) {
       fetchHabitData();
     }
-  }, [currentUser]);
+  }, [userId]);
 
   return (
     <div className="daily-progress-container">
