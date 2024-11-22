@@ -7,7 +7,7 @@ const AddHabit: React.FC = () => {
   const { currentUser } = useAuth(); // Get userId from AuthContext
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [habitName, setHabitName] = useState('');
-  const [reminder, setReminder] = useState(false);
+  const [reminder, setReminder] = useState(false); // Reminder state (checkbox)
   const [color, setColor] = useState('#FF0000'); // Default to red
   const [goal, setGoal] = useState(''); // Goal is now a string
   const [loading, setLoading] = useState(false);
@@ -28,7 +28,7 @@ const AddHabit: React.FC = () => {
       name: habitName,  // Match the expected 'name' property
       color,            // Use the hex color value here
       goal,             // Keep goal as a string
-      reminder,         // Add reminder status
+      reminder,         // Add reminder status (from the checkbox)
     };
 
     try {
@@ -42,8 +42,8 @@ const AddHabit: React.FC = () => {
 
       // Reset the form and close the modal on successful submission
       setHabitName('');
-      setReminder(false);
-      setColor('#FF0000'); // Reset to default color
+      setReminder(false);  // Reset reminder
+      setColor('#FF0000');  // Reset to default color
       setGoal('');
       setIsModalOpen(false);
     } catch (err: any) {
@@ -86,6 +86,16 @@ const AddHabit: React.FC = () => {
                 onChange={(e) => setHabitName(e.target.value)}
                 required
               />
+
+              {/* Reminder Checkbox */}
+              <label className="checkbox-label">
+                <input
+                  type="checkbox"
+                  checked={reminder}
+                  onChange={(e) => setReminder(e.target.checked)}
+                />
+                Enable Reminder
+              </label>
 
               {/* Color Dropdown */}
               <label htmlFor="color">Select Color:</label>

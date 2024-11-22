@@ -58,3 +58,32 @@ export const saveHabit = (habitData: { name: string, color: string, goal: string
 };
 
 
+
+// Fetch all habits
+
+// The base URL for your API
+const API_URL = 'http://localhost:5000/api'; // Adjust to your server URL if necessary
+
+// Fetch habits for a specific user
+export const fetchHabits = async (userId: string) => {
+  try {
+    const response = await axios.get(`${API_URL}/habits/${userId}`);
+    return response.data; // Return the fetched habits
+  } catch (error) {
+    console.error("Error fetching habits:", error);
+    throw error;
+  }
+};
+
+// Increment goal for a habit
+export const incrementGoal = async (userId: string, habitId: string) => {
+  try {
+    const response = await axios.put(`${API_URL}/habits/log/${userId}/${habitId}`, {
+      count: 1, // Increment by 1 (or pass any count value you need)
+    });
+    return response.data; // Return the updated habit data
+  } catch (error) {
+    console.error("Error incrementing habit goal:", error);
+    throw error;
+  }
+};
